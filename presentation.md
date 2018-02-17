@@ -3,11 +3,11 @@
 %date: 2018/02/16
 
 
+
+-> # The Journey of a HTTP Request through the Network Stack
+
+
 -> *Django Girls Milton Keynes* <-
-
--> # An intro to TCP/IP,  the networking architecture of the Internet <-
-
-
 
 -> 2018/02/16 <-
 -> Conrad Ho <-
@@ -28,6 +28,13 @@
 	* Some prior fascinations include photography, lock picking,
 	  kiteboarding, chess, and poker
 
+* In the next 10 minutes, we will talk about some network concepts,
+  and intersperse some live demonstrations in between!
+    * because live coding is fun and every day is an adventure :D
+    * also to reinforce the concepts we just learnt
+    * also you will be introduced to some commandline tools that may
+      may eventually help you with debugging your django website!
+
 * Slides for this presentation can be found [here](https://github.com/conradho/network-traffic)
 
 
@@ -45,16 +52,20 @@ each layer is modular and responsible for different things, with lower
 layers doing more low level stuff before passing on processed packets
 to higher layers.
 
-The Internet Layer is near the bottom of the stack. Here, you have low level
-protocols (eg: IPv4, IPv6) that deal with delivering a data packet to a
-specific IP address.
+The Internet Layer is near the bottom of the stack. Here, you have low
+level protocols (eg: IPv4, IPv6) that deal with delivering a data
+packet to a specific IP address (eg: 127.0.0.1).
 
 -> *My Epic Post Office Analogy:*
 -> *This is similar to a mail courier focused on delivering a*
 -> *single package based on the Zip Code printed on it*
 
+If you read one of the [first chapters](https://tutorial.djangogirls.org/en/how_the_internet_works/) of the Django Girls Tutorial,
+you will remember that the internet is a network of connected machines.
+
 Behind the scenes, the Internet Layer selects the gateway for the next
 hop, and transmits the packet to this next-hop host.
+
 
 
 -------------------------------------------------
@@ -65,11 +76,11 @@ Resolving Hostnames into IP Addresses
 You may have noticed that www.google.com is a domain and not a
 numerical IP address (eg: 216.58.211.164).
 
-> dig www.google.com
-
 A Domain Name System (DNS) lookup takes a domain name and finds out
 the IP addresses so we can use the Internet Protocol to send packets
 to that machine.
+
+> nslookup www.google.com
 
 In the early days of the internet, we used to store all hostnames
 locally!
@@ -111,9 +122,10 @@ The Transport Layer is one level above the Internet Layer.
 
 Some protocols in this layer are TCP and UDP.
 
-It deals with issues such as network reliability (by using ACKs and checksums
-to make sure packets are delivered and not corrupted), maintaining order of
-packets, avoiding congestion by exponential backoff etc.
+It deals with issues such as network reliability (by using ACKs and
+checksums to make sure packets are delivered and not corrupted),
+maintaining order of packets, avoiding congestion by exponential
+backoff etc.
 
 -> *My Epic Post Office Analogy:*
 -> *This is similar to a system where you deal with returned*
@@ -125,13 +137,16 @@ packets, avoiding congestion by exponential backoff etc.
 Yay Live Demo!
 ==============
 
-The Transport Layer lets you do some pretty amazing stuff.
+You can do some pretty amazing stuff with just the Transport Layer.
 
 The tool we will use here is ncat- you may also use nc, or netcat.
 
 You can setup your own web server:
 > echo hi, welcome to my website | ncat -l 8888
 > curl localhost:8888
+
+-> *Applying what we learnt:*
+-> *Do you recognize* `localhost` *from /etc/hosts?*
 
 You can roll your own chat messenger:
 
